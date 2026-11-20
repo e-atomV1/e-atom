@@ -631,6 +631,10 @@ svg.sp{width:.55em;height:1.15em;vertical-align:-.2em;fill:none;stroke:currentCo
 #sp:not([data-role]) .spc>*:not(.ttl):not(.ttl2):not(.ttl3):not(.spr){display:none!important}
 #sp .spback{margin-top:12px;background:none;border:0;color:#d7ecff;font:600 .85rem inherit;text-decoration:underline;cursor:pointer;opacity:.85}
 #sp:not([data-role]) .spback{display:none!important}
+.gdg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;max-width:900px;margin:0 auto}
+.gdc{display:flex;flex-direction:column;gap:6px;align-items:flex-start;text-align:left;padding:16px 18px;border-radius:18px;border:1px solid rgba(143,216,255,.35);background:linear-gradient(160deg,rgba(40,110,255,.35),rgba(10,30,90,.55));color:#fff;cursor:pointer;font:inherit}
+.gdc b{font-size:1.05rem}.gdc small{opacity:.8;font-size:.8rem;line-height:1.3}.gdc:hover,.gdc:focus-visible{border-color:#8fd8ff;transform:translateY(-2px)}.gdc.red{border-color:rgba(255,120,120,.5)}
+#gd{overflow:auto}
 </style>
 </head><body>
 <canvas id="bg"></canvas><canvas id="cf"></canvas>
@@ -647,6 +651,18 @@ svg.sp{width:.55em;height:1.15em;vertical-align:-.2em;fill:none;stroke:currentCo
   </div>
 </section>
 
+<section class="s" id="gd"><div class="fxt"></div><canvas class="fxc"></canvas><div class="crw"><div class="crh"><h1>DASHBOARD GURU · E-ATOM</h1></div>
+<p class="mut" style="text-align:center;margin:4px 0 12px">Halaman ini hanya untuk guru. Siswa tidak melihat menu ini.</p>
+<div class="gdg">
+<button type="button" class="gdc" onclick="crOpen()"><b>🎮 Final Challenge</b><small>Kontrol permainan: START, Pause, pengaturan, peta ular tangga, peringkat.</small></button>
+<button type="button" class="gdc" onclick="rosOpen('*')"><b>🏫 Kelas &amp; Siswa</b><small>Data nama dan kelas semua siswa yang sudah masuk.</small></button>
+<button type="button" class="gdc" onclick="tkOpen()"><b>📈 Pantauan Guru</b><small>Nilai misi, Final, Bonus, dan Total per siswa.</small></button>
+<button type="button" class="gdc" onclick="bankSoal()"><b>🗂️ Bank Soal</b><small>Lihat dan atur soal pilihan ganda.</small></button>
+<button type="button" class="gdc" onclick="guru()"><b>📊 Analitik Guru</b><small>Ringkasan hasil belajar kelas.</small></button>
+<button type="button" class="gdc" onclick="go('map')"><b>🗺️ Peta Misi</b><small>Lihat Peta Misi seperti yang dilihat siswa.</small></button>
+<button type="button" class="gdc" onclick="pengaturan()"><b>⚙️ Pengaturan</b><small>Suara, tampilan, dan opsi lainnya.</small></button>
+<button type="button" class="gdc red" onclick="fbOut()"><b>🚪 Keluar</b><small>Keluar dari akun guru di perangkat ini.</small></button>
+</div><div id="gdcls" style="margin-top:14px"></div></div></section>
 <section class="s" id="pl"><div class="fxt"></div><canvas class="fxc"></canvas><button type="button" class="btn back" onclick="go('sp')">← Kembali</button><div class="card" id="plc">
   <div class="qa-st hid" id="stp"></div>
   <section class="qa-pg" id="pg0">
@@ -833,7 +849,7 @@ function disp(){op(`<h2>Tampilan Layar</h2><p style="color:var(--mut)">Ukuran ot
 function tgm(s){const m=$('menu'),o=s===undefined?m.classList.contains('hid'):s;m.classList.toggle('hid',!o);$('fab').classList.toggle('open',o)}
 function mn(f){tgm(false);f()}
 document.addEventListener('click',e=>{if(!e.target.closest('#dock'))tgm(false)});
-function go(i){thStop();document.body.dataset.s=i;mpOpen(false);$('dock').classList.remove('o-sp','o-pl','o-map','o-mt');$('dock').classList.add('o-'+i);tgm(false);document.querySelectorAll('.s').forEach(s=>s.classList.remove('on'));$(i).classList.add('on');if(i==='pl')plInit();if(i==='map'){mLoad();dash();window.scrollTo(0,0)};beep(520,.08)}
+function go(i){if(i==='gd'&&!(window.KL&&KL.isT&&KL.isT()))i='sp';thStop();document.body.dataset.s=i;mpOpen(false);$('dock').classList.remove('o-sp','o-pl','o-map','o-mt');$('dock').classList.add('o-'+(i==='gd'?'map':i));tgm(false);document.querySelectorAll('.s').forEach(s=>s.classList.remove('on'));$(i).classList.add('on');if(i==='pl')plInit();if(i==='map'){mLoad();dash();window.scrollTo(0,0)};if(i==='gd'){window.scrollTo(0,0);try{gdRefresh()}catch(e){}};beep(520,.08)}
 const NI={bd:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/>',bk:'<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5v-17zM8 7h8M8 11h6"/>',tg:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>',lk:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h4"/>',hp:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/>',inf:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>',sw:'<path d="M7 7h12l-3-3M17 17H5l3 3"/>',gr:'<path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',ch:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',ag:'<path d="M4 4h16v16H4zM4 10h16M10 4v16"/>',hm:'<path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>'};
 function pengaturan(){op(`<h2>⚙️ Pengaturan</h2><div class="nvl" id="stl"><button type="button" class="nv" onclick="sndp()"><span class="ib"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></span><span>Suara</span></button><button type="button" class="nv" onclick="disp()"><span class="ib"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span><span>Tampilan Layar</span></button><button type="button" class="nv" onclick="auf()"><span class="ib"><svg viewBox="0 0 24 24">${NI.ag}</svg></span><span>Diagram Aufbau</span></button><button type="button" class="nv" onclick="tkOpen()"><span class="ib"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><span>Pantauan Guru</span></button>${ISU?`<button type="button" class="nv" onclick="kodeKelas()"><span class="ib"><svg viewBox="0 0 24 24"><circle cx="8" cy="14" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg></span><span>Kode Kelas</span></button><button type="button" class="nv" onclick="guru()"><span class="ib"><svg viewBox="0 0 24 24">${NI.ch}</svg></span><span>Analitik Guru</span></button>`:''}<button type="button" class="nv" onclick="cl();go('sp')"><span class="ib"><svg viewBox="0 0 24 24">${NI.hm}</svg></span><span>Layar Depan</span></button></div>`)}
 
@@ -935,6 +951,9 @@ function rosOpen(k,msg){const G=rosData(),all=k==='*',keys=all?Object.keys(G).so
  op(`<h2>🏫 Data ${all?'Semua Kelas':'Kelas '+esc(k)}</h2><p style="color:var(--mut)">${L.length} siswa${msg?' · '+esc(msg):''}</p><div class="tk-w"><table class="tk-t"><tr><th>#</th><th>Nama</th><th>Kelas</th><th>Skor misi</th><th>Hapus</th></tr>${L.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.o.name)}</td><td>${esc(x.c)}</td><td class="am">${x.o.sc||0}</td><td><button type="button" class="btn red" aria-label="Hapus ${esc(x.o.name)}" onclick="rosAsk(${q(x.c)},${x.n})">🗑</button></td></tr>`).join('')}</table></div>${all?'':`<p style="margin-top:10px"><button type="button" class="btn red" onclick="rosAsk(${q(k)},null)">🗑 Hapus semua siswa kelas ini</button></p>`}<div id="rsq"></div>`)}
 window.rosOpen=rosOpen;
 setInterval(()=>{try{rosRefresh()}catch(e){}},3000);
+
+function gdRefresh(){const h=document.getElementById('gdcls');if(!h)return;const g=rosData(),ks=Object.keys(g).sort();h.innerHTML=ks.length?'<h3 style="text-align:center">Kelas yang sudah masuk</h3><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0">'+ks.map(k=>`<button type="button" class="btn" data-k="${esc(k)}" onclick="rosOpen(this.dataset.k)">🏫 Kelas ${esc(k)} · ${g[k].length} siswa</button>`).join('')+'</div>':'<p class="mut" style="text-align:center">Belum ada siswa yang masuk.</p>'}
+setInterval(()=>{try{if(document.body.dataset.s==='gd')gdRefresh()}catch(e){}},3000);
 function clsList(){const set=new Set();try{allRows().forEach(x=>{if(x.type!=='Tamu'&&x.cls&&x.cls!=='-')set.add(ckey(x.cls))})}catch(e){}return[...set].sort()}
 function clsSelHTML(){const l=clsList();if(CLSEL!=='*'&&!l.includes(CLSEL))CLSEL='*';return' <select class="sel2" aria-label="Kelas" onchange="CLSEL=this.value;dash();if(CLSEL===\'*\')rosOpen(\'*\')"><option value="*"'+(CLSEL==='*'?' selected':'')+'>Semua kelas</option>'+l.map(c=>'<option value="'+esc(c)+'"'+(CLSEL===c?' selected':'')+'>Kelas '+esc(c)+'</option>').join('')+'</select>'}
 function allRows(){const m=new Map();LS.get().concat(DBR,RR).forEach(x=>{const o=m.get(x.id);if(!o)m.set(x.id,x);else m.set(x.id,(x.t||0)>=(o.t||0)?Object.assign({},o,x):Object.assign({},x,o))});return[...m.values()]}
@@ -1884,7 +1903,7 @@ function bind(){const b=$('crBody');b.querySelectorAll('[data-act]').forEach(e=>
 function subAny(a){if(BON.active)bsubmit(a);else if(ST&&ST.sync)submitSync(a);else submit(a)}
 window.crOpen=async function(){go('cr');$('crBody').innerHTML='<div class="wt">⏳<h3>Memuat…</h3></div>';view='load';const ok=await init();if(!ok){db=null;render(true);return}me=mine();
  if(!isT&&ST&&ST.gid&&!ST.sync&&!me&&(ST.phase==='lobby'||ST.phase==='play')&&ident().name)await join();me=mine();render(true)};
-window.crClose=function(){rmSet(null);go('map')};
+window.crClose=function(){rmSet(null);go(isT?'gd':'map')};
 window.RACE._rm=rmSet;window.RACE._s=submit;window.RACE._sa=subAny;window.RACE._r=()=>render(true);window.RACE._d=()=>({ST,PS,uid,m:myQ(),RES,fb:!!fb,SET,KEYS,VD});
 })();
 
@@ -2068,7 +2087,7 @@ setInterval(()=>{try{const e=document.getElementById('sp'),k=window.KL&&KL.spSta
 (function(){let n=0,t=0;document.addEventListener('click',ev=>{if(!ev.target.closest||!ev.target.closest('#sp .ttl'))return;const w=Date.now();if(w-t>3000)n=0;t=w;if(++n>=5){n=0;guruInfo()}});if(location.hash==='#guru')setTimeout(()=>{try{guruInfo()}catch(e){}},1500)})();
 window.kodeKelas=function(){op(KL.codesHTML())};
 window.kelasSaya=function(){if(isT){guru();return}op(selfHTML())};
-window.gateGo=async function(){const tgo=()=>{try{PS.mode='Solo';PS.solo={name:'Guru',cls:'-',ch:'🧑‍🔬'};start()}catch(e){go('pl')}};if(document.body.classList.contains('teacher')){tgo();return}if(!window.KL){go('pl');return}try{const U=window.claude&&await claude.use('user');if(U&&await U.canEdit()){tgo();return}}catch(e){}if(!KL.gateNeed()){go('pl');return}gateOpen()};
+window.gateGo=async function(){const tgo=()=>{try{PS.mode='Solo';PS.solo={name:'Guru',cls:'-',ch:'🧑‍🔬'};if(typeof start==='function')try{start()}catch(e){}go('gd')}catch(e){go('pl')}};if(document.body.classList.contains('teacher')){tgo();return}if(!window.KL){go('pl');return}try{const U=window.claude&&await claude.use('user');if(U&&await U.canEdit()){tgo();return}}catch(e){}if(!KL.gateNeed()){go('pl');return}gateOpen()};
 window.gateOpen=function(m){op('<h2>🔑 Masukkan kode dari gurumu</h2><p class="mut">Kode ini membuka Peta Misi 1–3. Final Challenge tinggal diklik.</p><input id="gk" maxlength="8" autocomplete="off" autocapitalize="characters" placeholder="KODE" style="text-transform:uppercase;text-align:center;letter-spacing:.3em;font-size:1.3rem;padding:12px;border-radius:12px;width:100%" onkeydown="if(event.key===\'Enter\')gateOk()"><button type="button" class="btn cgo" onclick="gateOk()" style="margin-top:10px">Lanjut</button><p id="gkm" style="color:var(--am)" role="alert">'+(m||'')+'</p>');setTimeout(()=>{const i=document.getElementById('gk');i&&i.focus()},60)};
 window.gateOk=function(){const c=((document.getElementById('gk')||{}).value||'').trim().toUpperCase(),CS=KL.classes();if(!Object.keys(CS).length){gateOpen('Guru belum membuat kelas. Tunggu sebentar lalu coba lagi.');return}if(!CS[c]){gateOpen('Kode tidak ditemukan. Periksa kode dari gurumu.');return}KL.enter(c);cl();go(typeof PL!=='undefined'&&PL&&PL.name?'map':'pl')};
 boot().finally(()=>{bootD=true});
@@ -2084,7 +2103,7 @@ setInterval(chk,2500);document.addEventListener('visibilitychange',chk);document
 (function(){var K='qal.role';function g(){try{return sessionStorage.getItem(K)||''}catch(e){return''}}function st(r){try{r?sessionStorage.setItem(K,r):sessionStorage.removeItem(K)}catch(e){}}
 function sp(){return document.getElementById('sp')}
 window.pickRole=function(r){var e=sp();if(!e)return;if(!r){delete e.dataset.role;st('');return}
- if(r==='m'){e.dataset.role='m';st('m');return}
+ if(r==='m'){st('m');var s0=window.KL&&KL.spState?KL.spState():'m';if(s0==='t'){Promise.resolve(window.fbLogout&&fbLogout()).catch(function(){}).then(function(){location.reload()});return}e.dataset.role='m';return}
  var s=window.KL&&KL.spState?KL.spState():'m';if(s==='t'){e.dataset.role='g';st('g');return}
  st('g');if(window.guruInfo)guruInfo()};
 setInterval(function(){var e=sp();if(!e||e.dataset.role)return;var r=g();if(r==='m')e.dataset.role='m';else if(r==='g'&&window.KL&&KL.spState&&KL.spState()==='t')e.dataset.role='g'},400);
