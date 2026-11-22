@@ -327,7 +327,7 @@ table th{text-align:left;color:var(--mut);font-size:.7rem;letter-spacing:.08em;t
 @keyframes lq{to{transform:rotate(360deg)}}
 @keyframes rs{0%{transform:translate(0,0);opacity:0}15%{opacity:.8}50%{transform:translate(5px,-18px)}100%{transform:translate(-4px,-40px);opacity:0}}
 .menu{display:flex!important;flex-direction:column;grid-template-columns:none;align-content:flex-start}.menu.hid{display:none!important}.mi span:last-child{flex:1}#dock{zoom:1}
-.mi.t{display:none!important}#dock.teacher.o-map .mi.t{display:flex!important}
+.mi.t{display:none!important}#dock.teacher.o-map .mi.t{display:flex!important}#dock.teacher.o-map .mi[onclick="mn(crOpen)"]{display:flex!important}
 .md.lite{background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;pointer-events:none;align-items:flex-end;justify-content:flex-start}
 .md.lite .bx{pointer-events:auto;width:min(340px,calc(100vw - 28px));margin:0 0 84px 14px;max-height:55vh;overflow:auto;box-shadow:0 12px 40px #000a}
 .sel2{background:var(--g);color:var(--tx);border:1px solid var(--gb);border-radius:12px;padding:9px 12px;font:inherit;max-width:100%}.sel2 option{color:#000}
@@ -1919,9 +1919,9 @@ function bind(){const b=$('crBody');b.querySelectorAll('[data-act]').forEach(e=>
  const fs=$('fs');if(fs){fs.onclick=()=>subAny($('fa').value);$('fa').onkeydown=e=>{if(e.key==='Enter')subAny($('fa').value)}}
  b.querySelectorAll('.tp').forEach(e=>e.onclick=()=>{const i=+e.dataset.i;selB[i]=(selB[i]+1)%3;render(true)});const ds=$('dgs');if(ds)ds.onclick=()=>subAny(selB.slice())}
 function subAny(a){if(BON.active)bsubmit(a);else if(ST&&ST.sync)submitSync(a);else submit(a)}
-window.crOpen=async function(){go('cr');try{const tt=document.body.classList.contains('teacher')||(window.KL&&KL.isT&&KL.isT()),bb=document.querySelector('#cr .crh .btn');if(bb&&bb.id!=='crbk')bb.textContent=tt?'← Dashboard':'← Peta Misi'}catch(e){}try{$('crbk').style.display=(document.body.classList.contains('teacher')||(window.KL&&KL.isT&&KL.isT()))?'':'none'}catch(e){}$('crBody').innerHTML='<div class="wt">⏳<h3>Memuat…</h3></div>';view='load';const ok=await init();if(!ok){db=null;render(true);return}me=mine();
+window.crOpen=async function(){go('cr');try{const tt=document.body.classList.contains('teacher')||(window.KL&&KL.isT&&KL.isT()),bb=document.querySelector('#cr .crh .btn');if(bb&&bb.id!=='crbk')bb.textContent='← Peta Misi'}catch(e){}try{$('crbk').style.display=(document.body.classList.contains('teacher')||(window.KL&&KL.isT&&KL.isT()))?'':'none'}catch(e){}$('crBody').innerHTML='<div class="wt">⏳<h3>Memuat…</h3></div>';view='load';const ok=await init();if(!ok){db=null;render(true);return}me=mine();
  if(!isT&&ST&&ST.gid&&!ST.sync&&!me&&(ST.phase==='lobby'||ST.phase==='play')&&ident().name)await join();me=mine();render(true)};
-window.crClose=function(){rmSet(null);go(document.body.classList.contains('teacher')||(window.KL&&KL.isT&&KL.isT())?'gd':'map')};
+window.crClose=function(){rmSet(null);go('map')};
 window.RACE._rm=rmSet;window.RACE._s=submit;window.RACE._sa=subAny;window.RACE._r=()=>render(true);window.RACE._d=()=>({ST,PS,uid,m:myQ(),RES,fb:!!fb,SET,KEYS,VD});
 })();
 
@@ -2105,7 +2105,7 @@ setInterval(()=>{try{const e=document.getElementById('sp'),k=window.KL&&KL.spSta
 (function(){let n=0,t=0;document.addEventListener('click',ev=>{if(!ev.target.closest||!ev.target.closest('#sp .ttl'))return;const w=Date.now();if(w-t>3000)n=0;t=w;if(++n>=5){n=0;guruInfo()}});if(location.hash==='#guru')setTimeout(()=>{try{guruInfo()}catch(e){}},1500)})();
 window.kodeKelas=function(){op(KL.codesHTML())};
 window.kelasSaya=function(){if(isT){guru();return}op(selfHTML())};
-window.gateGo=async function(){const tgo=()=>{try{PS.mode='Solo';PS.solo={name:'Guru',cls:'-',ch:'🧑‍🔬'};try{start()}catch(e){}go('gd')}catch(e){go('pl')}};if(document.body.classList.contains('teacher')){tgo();return}if(!window.KL){go('pl');return}try{const U=window.claude&&await claude.use('user');if(U&&await U.canEdit()){tgo();return}}catch(e){}if(!KL.gateNeed()){go('pl');return}gateOpen()};
+window.gateGo=async function(){const tgo=()=>{try{PS.mode='Solo';PS.solo={name:'Guru',cls:'-',ch:'🧑‍🔬'};start()}catch(e){go('pl')}};if(document.body.classList.contains('teacher')){tgo();return}if(!window.KL){go('pl');return}try{const U=window.claude&&await claude.use('user');if(U&&await U.canEdit()){tgo();return}}catch(e){}if(!KL.gateNeed()){go('pl');return}gateOpen()};
 window.gateOpen=function(m){op('<h2>🔑 Masukkan kode dari gurumu</h2><p class="mut">Kode ini membuka Peta Misi 1–3. Final Challenge tinggal diklik.</p><input id="gk" maxlength="8" autocomplete="off" autocapitalize="characters" placeholder="KODE" style="text-transform:uppercase;text-align:center;letter-spacing:.3em;font-size:1.3rem;padding:12px;border-radius:12px;width:100%" onkeydown="if(event.key===\'Enter\')gateOk()"><button type="button" class="btn cgo" onclick="gateOk()" style="margin-top:10px">Lanjut</button><p id="gkm" style="color:var(--am)" role="alert">'+(m||'')+'</p>');setTimeout(()=>{const i=document.getElementById('gk');i&&i.focus()},60)};
 window.gateOk=function(){const c=((document.getElementById('gk')||{}).value||'').trim().toUpperCase(),CS=KL.classes();if(!Object.keys(CS).length){gateOpen('Guru belum membuat kelas. Tunggu sebentar lalu coba lagi.');return}if(!CS[c]){gateOpen('Kode tidak ditemukan. Periksa kode dari gurumu.');return}KL.enter(c);cl();go(typeof PL!=='undefined'&&PL&&PL.name?'map':'pl')};
 boot().finally(()=>{bootD=true});
